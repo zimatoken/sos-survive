@@ -2,7 +2,7 @@
   "name": "SOS SURVIVE — Офлайн-ассистент выживания",
   "short_name": "SOS SURVIVE",
   "description": "Офлайн-приложение для выживания в экстремальных ситуациях",
-  "start_url": "/sos-survive/",
+  "start_url": "/sos-survive/index.html",
   "scope": "/sos-survive/",
   "display": "standalone",
   "background_color": "#0f172a",
@@ -11,13 +11,13 @@
   "categories": ["lifestyle", "utilities", "reference"],
   "icons": [
     {
-      "src": "assets/icons/icon-192.png",
+      "src": "/sos-survive/assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-512.png",
+      "src": "/sos-survive/assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
