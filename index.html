@@ -11,6 +11,9 @@
   <!-- Базовый путь для GitHub Pages подпапки -->
   <base href="/sos-survive/">
   
+  <!-- Fallback для iOS PWA -->
+  <meta name="apple-mobile-web-app-title" content="SOS SURVIVE">
+  
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="stylesheet" href="css/styles.css">
@@ -212,8 +215,17 @@
       loadTheme();
     });
     
+    // Принудительная регистрация SW с обходом кэша
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sos-survive/sw.js');
+      navigator.serviceWorker.register('/sos-survive/sw.js', {
+        updateViaCache: 'none'
+      }).then(reg => {
+        console.log('✅ SW registered:', reg.scope);
+        // Принудительно проверяем обновления
+        reg.update();
+      }).catch(err => {
+        console.log('❌ SW error:', err);
+      });
     }
   </script>
 </body>
