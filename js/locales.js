@@ -11,7 +11,7 @@ const LOCALES = {
     app_subtitle: "Офлайн-ассистент выживания",
     status_online: "Режим офлайн — база загружена",
     sos_button: "SOS — Я в опасности",
-    footer_text: "v1.0 · Полностью офлайн",
+    footer_text: "v2.0 · Полностью офлайн",
     
     // Категории
     cat_water: "Вода",
@@ -21,6 +21,7 @@ const LOCALES = {
     cat_medicine: "Медицина",
     cat_navigation: "Навигация",
     cat_radio: "Связь",
+    cat_kit: "Чемоданчик",
     
     // Общие
     back: "← Назад",
@@ -28,6 +29,7 @@ const LOCALES = {
     show_results: "Показать решения",
     restart: "🔄 Новый запрос",
     back_home: "← На главную",
+    back_results: "← Назад к результатам",
     
     // Вопросы
     question_of: "Вопрос {current} из {total}",
@@ -95,7 +97,7 @@ const LOCALES = {
     app_subtitle: "Offline Survival Assistant",
     status_online: "Offline mode — database loaded",
     sos_button: "SOS — I'm in danger",
-    footer_text: "v1.0 · Fully offline",
+    footer_text: "v2.0 · Fully offline",
     
     // Categories
     cat_water: "Water",
@@ -104,6 +106,8 @@ const LOCALES = {
     cat_food: "Food",
     cat_medicine: "Medicine",
     cat_navigation: "Navigation",
+    cat_radio: "Radio",
+    cat_kit: "Survival Kit",
     
     // Common
     back: "← Back",
@@ -111,6 +115,7 @@ const LOCALES = {
     show_results: "Show solutions",
     restart: "🔄 New request",
     back_home: "← Home",
+    back_results: "← Back to results",
     
     // Questions
     question_of: "Question {current} of {total}",
