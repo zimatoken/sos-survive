@@ -1,85 +1,117 @@
-const CACHE_NAME = 'sos-survive-v3-FORCE';
+const CACHE_NAME = 'sos-survive-v4-STABLE';
 const BASE_PATH = '/sos-survive/';
 
-const urlsToCache = [
-  '/sos-survive/',
-  '/sos-survive/index.html',
-  '/sos-survive/css/styles.css',
-  '/sos-survive/js/locales.js',
-  '/sos-survive/js/theme.js',
-  '/sos-survive/js/voice.js',
-  '/sos-survive/js/engine.js',
-  '/sos-survive/js/app.js',
-  '/sos-survive/js/data/water.js',
-  '/sos-survive/js/data/fire.js',
-  '/sos-survive/js/data/shelter.js',
-  '/sos-survive/js/data/food.js',
-  '/sos-survive/js/data/medicine.js',
-  '/sos-survive/js/data/navigation.js',
-  '/sos-survive/js/data/radio.js',
-  '/sos-survive/js/data/kit.js',
-  '/sos-survive/manifest.json',
-  '/sos-survive/404.html'
+// Только критичные файлы — index.html и манифест
+const CORE_FILES = [
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'manifest.json'
 ];
 
+// Опциональные файлы — если не загрузятся, не критично
+const OPTIONAL_FILES = [
+  BASE_PATH + 'css/styles.css',
+  BASE_PATH + 'js/locales.js',
+  BASE_PATH + 'js/theme.js',
+  BASE_PATH + 'js/voice.js',
+  BASE_PATH + 'js/engine.js',
+  BASE_PATH + 'js/app.js',
+  BASE_PATH + 'js/data/water.js',
+  BASE_PATH + 'js/data/fire.js',
+  BASE_PATH + 'js/data/shelter.js',
+  BASE_PATH + 'js/data/food.js',
+  BASE_PATH + 'js/data/medicine.js',
+  BASE_PATH + 'js/data/navigation.js',
+  BASE_PATH + 'js/data/radio.js',
+  BASE_PATH + 'js/data/kit.js',
+  BASE_PATH + '404.html'
+];
+
+// Установка — кэшируем критичные файлы
 self.addEventListener('install', event => {
-  console.log('[SW v3] Установка...');
+  console.log('[SW v4] Установка...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('[SW v3] Кэширование файлов...');
-        return cache.addAll(urlsToCache);
+        console.log('[SW v4] Кэшируем ядро...');
+        return cache.addAll(CORE_FILES);
       })
-      .catch(err => console.error('[SW v3] Ошибка кэширования:', err))
+      .then(() => {
+        console.log('[SW v4] Ядро закэшировано, кэшируем опциональные...');
+        return caches.open(CACHE_NAME).then(cache => {
+          // Каждый файл по отдельности — если один упал, остальные продолжают
+          return Promise.all(
+            OPTIONAL_FILES.map(url => 
+              cache.add(url).catch(err => {
+                console.warn('[SW v4] Не удалось кэшировать:', url, err);
+              })
+            )
+          );
+        });
+      })
+      .then(() => {
+        console.log('[SW v4] Установка завершена');
+        return self.skipWaiting();
+      })
   );
-  self.skipWaiting();
 });
 
+// Активация — удаляем ВСЕ старые кэши
 self.addEventListener('activate', event => {
-  console.log('[SW v3] Активация...');
+  console.log('[SW v4] Активация...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('[SW v3] Удаляем старый кэш:', cacheName);
+            console.log('[SW v4] Удаляем старый кэш:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     }).then(() => {
-      console.log('[SW v3] Claiming clients...');
+      console.log('[SW v4] Активирован');
       return self.clients.claim();
     })
   );
 });
 
+// Fetch — сеть первой, кэш запасной
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
-  // Редирект с корня на подпапку для GitHub Pages
-  if (url.pathname === '/' && url.hostname.includes('github.io')) {
-    event.respondWith(Response.redirect(BASE_PATH, 302));
+  // Навигация (открытие страницы) — всегда сеть, кэш как fallback
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Обновляем кэш свежей версией
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(BASE_PATH + 'index.html', clone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          console.log('[SW v4] Сеть недоступна, берём из кэша');
+          return caches.match(BASE_PATH + 'index.html');
+        })
+    );
     return;
   }
   
+  // Для остальных запросов — кэш первым, потом сеть
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
         return response;
       }
-      
-      // Для навигационных запросов — отдаём index.html из кэша
-      if (event.request.mode === 'navigate') {
-        return caches.match('/sos-survive/index.html');
-      }
-      
-      // Иначе — запрос в сеть с fallback
-      return fetch(event.request).catch(() => {
-        return caches.match('/sos-survive/index.html');
+      return fetch(event.request).catch(err => {
+        console.warn('[SW v4] Ошибка загрузки:', event.request.url);
       });
     })
   );
 });
 
-console.log('[SW v3] Service Worker загружен');
+console.log('[SW v4] Service Worker загружен');
