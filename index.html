@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>SOS SURVIVE — Офлайн-ассистент выживания</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ЭКРАН 1: Главная -->
+    <div class="screen active" id="screen-home">
+      <div class="header">
+        <!-- Логотип -->
+        <img src="assets/icons/icon-192.png" alt="SOS SURVIVE" class="app-logo">
+        <h1><span class="sos-badge">SOS</span> <span data-i18n="app_title">SURVIVE</span></h1>
+        <p data-i18n="app_subtitle">Офлайн-ассистент выживания</p>
+      </div>
+      <div class="status-bar">
+        <div class="dot"></div>
+        <span data-i18n="status_online">Режим офлайн — база загружена</span>
+      </div>
+
+      <!-- Переключатель языка + тема + микрофон -->
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="ru" onclick="setLanguage('ru')">
+          🇷🇺 Русский
+        </button>
+        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">
+          🇬🇧 English
+        </button>
+        <button class="mic-btn" onclick="startVoiceInput()" title="Голосовой ввод">
+          🎤
+        </button>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeToggle">🌙</button>
+      </div>
+
+      <button class="sos-btn" onclick="showSOS()">
+        <div class="pulse"></div>
+        <span data-i18n="sos_button">SOS — Я в опасности</span>
+      </button>
+
+      <!-- Сетка 2×4 — 8 категорий -->
+      <div class="grid">
+        <button class="cat-btn water" onclick="startFlow('water')">
+          <span class="icon">💧</span>
+          <span class="label" data-i18n="cat_water">Вода</span>
+        </button>
+        <button class="cat-btn fire" onclick="startFlow('fire')">
+          <span class="icon">🔥</span>
+          <span class="label" data-i18n="cat_fire">Огонь</span>
+        </button>
+        <button class="cat-btn shelter" onclick="startFlow('shelter')">
+          <span class="icon">🏠</span>
+          <span class="label" data-i18n="cat_shelter">Укрытие</span>
+        </button>
+        <button class="cat-btn food" onclick="startFlow('food')">
+          <span class="icon">🍖</span>
+          <span class="label" data-i18n="cat_food">Еда</span>
+        </button>
+        <button class="cat-btn med" onclick="startFlow('medicine')">
+          <span class="icon">🩹</span>
+          <span class="label" data-i18n="cat_medicine">Медицина</span>
+        </button>
+        <button class="cat-btn nav" onclick="startFlow('navigation')">
+          <span class="icon">🧭</span>
+          <span class="label" data-i18n="cat_navigation">Навигация</span>
+        </button>
+        <button class="cat-btn radio" onclick="startFlow('radio')">
+          <span class="icon">📻</span>
+          <span class="label" data-i18n="cat_radio">Связь</span>
+        </button>
+        <button class="cat-btn kit" onclick="startFlow('kit')">
+          <span class="icon">🎒</span>
+          <span class="label" data-i18n="cat_kit">Чемоданчик</span>
+        </button>
+      </div>
+
+      <div class="footer">
+        <span data-i18n="footer_text">v2.0 · Полностью офлайн</span>
+      </div>
+
+      <div class="map-link-block">
+        <a href="https://www.openstreetmap.org/" target="_blank" class="map-link">
+          🗺️ Открыть карту (требуется интернет)
+        </a>
+        <span class="map-hint">Или скачай Organic Maps — работает офлайн</span>
+      </div>
+    </div>
+
+    <!-- ЭКРАН 2: SOS -->
+    <div class="screen" id="screen-sos">
+      <button class="back-btn" onclick="goHome()" data-i18n="back">← Назад</button>
+      <div class="sos-card">
+        <div class="sos-header">
+          <div class="sos-icon">🚨</div>
+          <h2 data-i18n="sos_title">Режим SOS</h2>
+        </div>
+        <p class="sos-desc" data-i18n="sos_desc">Ваши координаты сохранены. При появлении сигнала будет отправлено сообщение экстренным контактам.</p>
+        <div class="gps-block">
+          <div class="gps-label" data-i18n="sos_gps">📍 GPS-координаты (кэш)</div>
+          <div class="gps-coords" id="gps-coords" data-i18n="sos_gps_detecting">Определение...</div>
+          <div class="gps-time" id="gps-time">Обновлено: --:--</div>
+        </div>
+        <div class="signals-block">
+          <div class="signals-title" data-i18n="sos_signals">📡 Сигналы для спасателей</div>
+          <div class="signal-item" onclick="toggleSignal(this)">
+            <div class="signal-check"></div>
+            <span data-i18n="sos_signal_1">3 огня в треугольнике (международный сигнал бедствия)</span>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this)">
+            <div class="signal-check"></div>
+            <span data-i18n="sos_signal_2">Зеркало / блестящий предмет — отражать солнце</span>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this)">
+            <div class="signal-check"></div>
+            <span data-i18n="sos_signal_3">Громкие звуки — 3 удара, пауза, 3 удара</span>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this)">
+            <div class="signal-check"></div>
+            <span data-i18n="sos_signal_4">Буквы SOS на открытой местности (камни, ветки)</span>
+          </div>
+        </div>
+        <button class="flashlight-btn" onclick="toggleFlashlight()" data-i18n="sos_flashlight">
+          🔦 Фонарик (SOS-мигание)
+        </button>
+        <div class="psychology-block">
+          <div class="psychology-title">🧠 Психология выживания</div>
+          <div class="psychology-item">
+            <span class="psychology-icon">🫁</span>
+            <span data-i18n="psychology_breath">Дыши: 4 сек вдох, 4 пауза, 4 выдох</span>
+          </div>
+          <div class="psychology-item">
+            <span class="psychology-icon">📝</span>
+            <span data-i18n="psychology_plan">Планируй: разбей день на отрезки</span>
+          </div>
+          <div class="psychology-item">
+            <span class="psychology-icon">🗣️</span>
+            <span data-i18n="psychology_talk">Говори с собой вслух — это успокаивает</span>
+          </div>
+          <div class="psychology-item">
+            <span class="psychology-icon">🎯</span>
+            <span data-i18n="psychology_goals">Ставь маленькие цели: "собрать дрова на 2 часа"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЭКРАН 3: Вопросы -->
+    <div class="screen" id="screen-questions">
+      <button class="back-btn" onclick="goHome()" data-i18n="back">← Назад</button>
+      <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+      <div id="question-container"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()" disabled data-i18n="next">Далее</button>
+    </div>
+
+    <!-- ЭКРАН 4: Результаты -->
+    <div class="screen" id="screen-results">
+      <button class="back-btn" onclick="goHome()" data-i18n="back_home">← На главную</button>
+      <div class="results-header">
+        <div class="results-icon" id="result-icon">💧</div>
+        <h2 id="result-title">Результаты</h2>
+        <p id="result-subtitle">Под вашу ситуацию</p>
+      </div>
+      <div id="results-container"></div>
+      <button class="restart-btn" onclick="goHome()" data-i18n="restart">
+        🔄 Новый запрос
+      </button>
+    </div>
+
+    <!-- ЭКРАН 5: Детальное решение -->
+    <div class="screen" id="screen-detail">
+      <button class="back-btn" onclick="showResultsBack()" data-i18n="back">← Назад к результатам</button>
+      <div id="detail-container"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Сначала локализация и тема -->
+  <script src="js/locales.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/voice.js"></script>
+
+  <!-- Потом данные -->
+  <script src="js/data/water.js"></script>
+  <script src="js/data/fire.js"></script>
+  <script src="js/data/shelter.js"></script>
+  <script src="js/data/food.js"></script>
+  <script src="js/data/medicine.js"></script>
+  <script src="js/data/navigation.js"></script>
+  <script src="js/data/radio.js"></script>
+  <script src="js/data/kit.js"></script>
+
+  <!-- Потом движок и приложение -->
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Загружаем сохранённый язык и тему -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedLanguage();
+      loadTheme();
+    });
+    
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
