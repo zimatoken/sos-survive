@@ -1,68 +1,65 @@
-const CACHE_NAME = 'sos-survive-v1';
+const CACHE_NAME = 'sos-survive-v3-FORCE';
+const BASE_PATH = '/sos-survive/';
+
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/css/styles.css',
-  '/js/engine.js',
-  '/js/app.js',
-  '/js/data/water.js',
-  '/js/data/fire.js',
-  '/js/data/shelter.js',
-  '/js/data/food.js',
-  '/js/data/medicine.js',
-  '/js/data/navigation.js',
-  '/manifest.json'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'css/styles.css',
+  BASE_PATH + 'js/locales.js',
+  BASE_PATH + 'js/theme.js',
+  BASE_PATH + 'js/voice.js',
+  BASE_PATH + 'js/engine.js',
+  BASE_PATH + 'js/app.js',
+  BASE_PATH + 'js/data/water.js',
+  BASE_PATH + 'js/data/fire.js',
+  BASE_PATH + 'js/data/shelter.js',
+  BASE_PATH + 'js/data/food.js',
+  BASE_PATH + 'js/data/medicine.js',
+  BASE_PATH + 'js/data/navigation.js',
+  BASE_PATH + 'js/data/radio.js',
+  BASE_PATH + 'js/data/kit.js',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + '404.html'
 ];
 
-// Установка — кэшируем все файлы
 self.addEventListener('install', event => {
-  console.log('[SW] Установка...');
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[SW] Кэшируем файлы...');
-        return cache.addAll(urlsToCache).catch(err => {
-          console.error('[SW] Ошибка кэширования:', err);
-        });
-      })
+      .then(cache => cache.addAll(urlsToCache))
+      .catch(err => console.error('[SW] Ошибка:', err))
   );
   self.skipWaiting();
 });
 
-// Активация — удаляем старые кэши
 self.addEventListener('activate', event => {
-  console.log('[SW] Активация...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[SW] Удаляем старый кэш:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames.map(cacheName => caches.delete(cacheName))
       );
+    }).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  
+  if (url.pathname === '/' && url.hostname.includes('github.io')) {
+    event.respondWith(Response.redirect(BASE_PATH, 302));
+    return;
+  }
+  
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      if (response) return response;
+      if (event.request.mode === 'navigate') {
+        return caches.match(BASE_PATH + 'index.html');
+      }
+      return fetch(event.request).catch(() => {
+        return caches.match(BASE_PATH + 'index.html');
+      });
     })
   );
-  self.clients.claim();
 });
 
-// Перехват запросов — сначала кэш, потом сеть
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Если есть в кэше — возвращаем
-        if (response) {
-          return response;
-        }
-        // Иначе — запрос в сеть
-        return fetch(event.request).catch(err => {
-          console.warn('[SW] Ошибка загрузки:', event.request.url, err);
-          // Можно вернуть fallback-страницу
-        });
-      })
-  );
-});
-
-console.log('[SW] Service Worker загружен');
+console.log('[SW v3] Service Worker загружен');
