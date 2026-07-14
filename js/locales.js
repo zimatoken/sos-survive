@@ -285,6 +285,9 @@ function loadSavedLanguage() {
     });
   }, 100);
   
+  // Обновляем UI для перевода статических элементов
+  updateUI();
+  
   console.log(`✅ Загружен язык: ${currentLang}`);
 }
 
