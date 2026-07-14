@@ -204,14 +204,9 @@ function setLanguage(lang) {
   
   currentLang = lang;
   localStorage.setItem('preferred_lang', lang);
-  updateUI();
   
-  // Обновляем активный класс у кнопок
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
-  
-  console.log(`✅ Язык изменён на: ${lang}`);
+  // ✅ ПЕРЕЗАГРУЗКА СТРАНИЦЫ ДЛЯ ПОДГРУЗКИ НУЖНЫХ ДАННЫХ
+  window.location.reload();
 }
 
 // ===== ОБНОВЛЕНИЕ ВСЕХ ТЕКСТОВ =====
@@ -265,13 +260,23 @@ function loadSavedLanguage() {
   const saved = localStorage.getItem('preferred_lang');
   if (saved && LOCALES[saved]) {
     currentLang = saved;
+  } else {
+    // Если язык не сохранён — определяем по браузеру
+    const browserLang = navigator.language || navigator.userLanguage;
+    if (browserLang && browserLang.startsWith('ru')) {
+      currentLang = 'ru';
+    } else {
+      currentLang = 'en';
+    }
   }
+  
   // Обновляем кнопки после загрузки
   setTimeout(() => {
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === currentLang);
     });
   }, 100);
+  
   console.log(`✅ Загружен язык: ${currentLang}`);
 }
 

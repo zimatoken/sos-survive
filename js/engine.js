@@ -1,7 +1,8 @@
 // === ДВИЖОК ФИЛЬТРАЦИИ РЕШЕНИЙ ===
+// Поддержка мультиязычности — выбирает данные по текущему языку
 
-// Проверяем, что все данные загружены
-console.log("🔍 Проверка данных:");
+// Проверяем, что все данные загружены (русские версии)
+console.log("🔍 Проверка данных (RU):");
 console.log("  waterData:", typeof waterData !== 'undefined' ? '✅' : '❌');
 console.log("  fireData:", typeof fireData !== 'undefined' ? '✅' : '❌');
 console.log("  shelterData:", typeof shelterData !== 'undefined' ? '✅' : '❌');
@@ -11,31 +12,75 @@ console.log("  navigationData:", typeof navigationData !== 'undefined' ? '✅' :
 console.log("  radioData:", typeof radioData !== 'undefined' ? '✅' : '❌');
 console.log("  kitData:", typeof kitData !== 'undefined' ? '✅' : '❌');
 
-// Регистр всех данных (только если данные определены)
-const dataRegistry = {};
+console.log("🔍 Проверка данных (EN):");
+console.log("  waterDataEn:", typeof waterDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  fireDataEn:", typeof fireDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  shelterDataEn:", typeof shelterDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  foodDataEn:", typeof foodDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  medicineDataEn:", typeof medicineDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  navigationDataEn:", typeof navigationDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  radioDataEn:", typeof radioDataEn !== 'undefined' ? '✅' : '❌');
+console.log("  kitDataEn:", typeof kitDataEn !== 'undefined' ? '✅' : '❌');
 
-if (typeof waterData !== 'undefined') dataRegistry.water = waterData;
-if (typeof fireData !== 'undefined') dataRegistry.fire = fireData;
-if (typeof shelterData !== 'undefined') dataRegistry.shelter = shelterData;
-if (typeof foodData !== 'undefined') dataRegistry.food = foodData;
-if (typeof medicineData !== 'undefined') dataRegistry.medicine = medicineData;
-if (typeof navigationData !== 'undefined') dataRegistry.navigation = navigationData;
-if (typeof radioData !== 'undefined') dataRegistry.radio = radioData;
-if (typeof kitData !== 'undefined') dataRegistry.kit = kitData;
+// Регистр всех данных (русские и английские версии)
+const dataRegistry = {
+  // Русские версии (используются по умолчанию)
+  ru: {
+    water: waterData,
+    fire: fireData,
+    shelter: shelterData,
+    food: foodData,
+    medicine: medicineData,
+    navigation: navigationData,
+    radio: radioData,
+    kit: kitData
+  },
+  // Английские версии (используются при выборе языка en)
+  en: {}
+};
 
-console.log("✅ Зарегистрировано категорий:", Object.keys(dataRegistry).length);
-console.log("📋 Список категорий:", Object.keys(dataRegistry).join(", "));
+// Заполняем английский регистр, если данные загружены
+if (typeof waterDataEn !== 'undefined') dataRegistry.en.water = waterDataEn;
+if (typeof fireDataEn !== 'undefined') dataRegistry.en.fire = fireDataEn;
+if (typeof shelterDataEn !== 'undefined') dataRegistry.en.shelter = shelterDataEn;
+if (typeof foodDataEn !== 'undefined') dataRegistry.en.food = foodDataEn;
+if (typeof medicineDataEn !== 'undefined') dataRegistry.en.medicine = medicineDataEn;
+if (typeof navigationDataEn !== 'undefined') dataRegistry.en.navigation = navigationDataEn;
+if (typeof radioDataEn !== 'undefined') dataRegistry.en.radio = radioDataEn;
+if (typeof kitDataEn !== 'undefined') dataRegistry.en.kit = kitDataEn;
 
+// Определяем текущий язык (из глобальной переменной или localStorage)
+function getCurrentLang() {
+  // Используем глобальную переменную из locales.js
+  return typeof currentLang !== 'undefined' ? currentLang : 'ru';
+}
+
+/**
+ * Получение данных по категории с учётом языка
+ */
 function getCategoryData(category) {
-  const data = dataRegistry[category];
+  const lang = getCurrentLang();
+  const langData = dataRegistry[lang] || dataRegistry.ru;
+  const data = langData[category];
+  
   if (!data) {
-    console.error("❌ Категория не найдена:", category);
+    console.error(`❌ Категория не найдена: ${category} (язык: ${lang})`);
+    // Пробуем найти в русской версии как fallback
+    if (lang !== 'ru' && dataRegistry.ru[category]) {
+      console.log(`🔄 Используем русскую версию как fallback для ${category}`);
+      return dataRegistry.ru[category];
+    }
     return null;
   }
-  console.log("✅ Загружена категория:", category, "вопросов:", data.questions?.length || 0, "решений:", data.solutions?.length || 0);
+  
+  console.log(`✅ Загружена категория: ${category} (язык: ${lang})`);
+  console.log(`   Вопросов: ${data.questions?.length || 0}, решений: ${data.solutions?.length || 0}`);
   return data;
 }
 
+/**
+ * Фильтрация решений по ответам пользователя
+ */
 function filterSolutions(data, answers) {
   if (!data || !data.solutions) {
     console.warn("⚠️ Нет данных или решений для фильтрации");
@@ -113,6 +158,9 @@ function filterSolutions(data, answers) {
   return result;
 }
 
+/**
+ * Получение решения по ID
+ */
 function getSolutionById(data, id) {
   if (!data || !data.solutions) {
     console.warn("⚠️ Нет данных для поиска решения");
@@ -126,9 +174,23 @@ function getSolutionById(data, id) {
   return solution || null;
 }
 
+// Обновляем данные при смене языка
+function refreshDataRegistry() {
+  // Просто перезагружаем — данные уже в регистре
+  const lang = getCurrentLang();
+  console.log(`🔄 Обновление данных для языка: ${lang}`);
+  
+  // Проверяем доступность данных для текущего языка
+  const langData = dataRegistry[lang] || dataRegistry.ru;
+  const categories = Object.keys(langData);
+  console.log(`📋 Доступно категорий (${lang}): ${categories.join(", ")}`);
+}
+
 // Экспорт для глобального использования
 window.getCategoryData = getCategoryData;
 window.filterSolutions = filterSolutions;
 window.getSolutionById = getSolutionById;
+window.refreshDataRegistry = refreshDataRegistry;
 
 console.log("✅ Движок загружен, готов к работе!");
+console.log(`🌍 Доступные языки: ${Object.keys(dataRegistry).join(", ")}`);
