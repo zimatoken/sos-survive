@@ -32,7 +32,58 @@ function goHome() {
 function showSOS() {
   showScreen("screen-sos");
   updateGPS();
+  loadContactData();
   showToast("Координаты сохранены в кэш");
+}
+
+function loadContactData() {
+  const phone = localStorage.getItem('sos_contact_phone');
+  const name = localStorage.getItem('sos_contact_name');
+  if (phone) document.getElementById('sos-phone').value = phone;
+  if (name) document.getElementById('sos-name').value = name;
+}
+
+function saveContactData() {
+  const phone = document.getElementById('sos-phone').value.trim();
+  const name = document.getElementById('sos-name').value.trim();
+  if (phone) localStorage.setItem('sos_contact_phone', phone);
+  if (name) localStorage.setItem('sos_contact_name', name);
+}
+
+function sendSOS() {
+  const phone = document.getElementById('sos-phone').value.trim();
+  const name = document.getElementById('sos-name').value.trim();
+  
+  if (!phone) {
+    showToast("Введите номер телефона!");
+    return;
+  }
+  
+  saveContactData();
+  
+  const coordsEl = document.getElementById("gps-coords");
+  const coords = coordsEl.textContent;
+  const now = new Date();
+  const timeStr = now.getHours() + ":" + now.getMinutes().toString().padStart(2, "0");
+  
+  const message = `🆘 SOS! Я в опасности!
+📍 Координаты: ${coords}
+📱 Карта: https://maps.google.com/?q=${coords.replace(/° N, /g, ',').replace('° E', '')}
+⏰ Время: ${timeStr}
+${name ? '👤 Имя: ' + name : ''}
+Пожалуйста, вызовите помощь!`;
+  
+  const smsUrl = `sms:${phone}?body=${encodeURIComponent(message)}`;
+  
+  window.location.href = smsUrl;
+  
+  setTimeout(() => {
+    navigator.clipboard.writeText(message).then(() => {
+      showToast("Сообщение скопировано в буфер обмена");
+    }).catch(() => {
+      showToast("SMS открыт. Если не работает, скопируйте координаты вручную.");
+    });
+  }, 1000);
 }
 
 function updateGPS() {

@@ -1,5 +1,5 @@
 // === SECTION: NAVIGATION (ENGLISH) ===
-const navigationData = {
+const navigationDataEn = {
   category: "navigation",
   title: "🧭 Navigation",
   description: "Orientation and rescue signals",

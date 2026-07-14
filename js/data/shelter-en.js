@@ -1,5 +1,5 @@
 // === SECTION: SHELTER (ENGLISH) ===
-const shelterData = {
+const shelterDataEn = {
   category: "shelter",
   title: "🏠 Shelter",
   description: "Building shelter from weather and cold",

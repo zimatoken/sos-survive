@@ -1,5 +1,5 @@
 // === SECTION: RADIO / COMMUNICATION (ENGLISH) ===
-const radioData = {
+const radioDataEn = {
   category: "radio",
   title: "📻 Communication",
   description: "Communication methods and signaling in emergency situations",

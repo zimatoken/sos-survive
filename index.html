@@ -135,6 +135,20 @@
           <div class="gps-coords" id="gps-coords" data-i18n="sos_gps_detecting">Определение...</div>
           <div class="gps-time" id="gps-time">Обновлено: --:--</div>
         </div>
+        <div class="contact-block">
+          <div class="contact-title" data-i18n="sos_contact_title">📱 Экстренный контакт</div>
+          <div class="contact-field">
+            <label for="sos-phone" data-i18n="sos_phone_label">Телефон близкого человека *</label>
+            <input type="tel" id="sos-phone" placeholder="+7 999 123 45 67" class="contact-input">
+          </div>
+          <div class="contact-field">
+            <label for="sos-name" data-i18n="sos_name_label">Имя близкого человека (опционально)</label>
+            <input type="text" id="sos-name" placeholder="Иван" class="contact-input">
+          </div>
+        </div>
+        <button class="send-sos-btn" onclick="sendSOS()" data-i18n="sos_send_btn">
+          🆘 ОТПРАВИТЬ SOS
+        </button>
         <div class="signals-block">
           <div class="signals-title" data-i18n="sos_signals">📡 Сигналы для спасателей</div>
           <div class="signal-item" onclick="toggleSignal(this)">
@@ -210,12 +224,18 @@
 
   <div class="toast" id="toast"></div>
 
-  <!-- Сначала локализация и тема -->
+  <!-- ========================================== -->
+  <!-- ПРАВИЛЬНЫЙ ПОРЯДОК ЗАГРУЗКИ СКРИПТОВ      -->
+  <!-- ========================================== -->
+
+  <!-- 1. ЛОКАЛИЗАЦИЯ (СНАЧАЛА!) -->
   <script src="/sos-survive/js/locales.js"></script>
+
+  <!-- 2. ТЕМА И ГОЛОС -->
   <script src="/sos-survive/js/theme.js"></script>
   <script src="/sos-survive/js/voice.js"></script>
 
-  <!-- Потом данные (Русские версии) -->
+  <!-- 3. РУССКИЕ ДАННЫЕ -->
   <script src="/sos-survive/js/data/water.js"></script>
   <script src="/sos-survive/js/data/fire.js"></script>
   <script src="/sos-survive/js/data/shelter.js"></script>
@@ -225,7 +245,7 @@
   <script src="/sos-survive/js/data/radio.js"></script>
   <script src="/sos-survive/js/data/kit.js"></script>
 
-  <!-- Потом данные (Английские версии) -->
+  <!-- 4. АНГЛИЙСКИЕ ДАННЫЕ (ПОСЛЕ РУССКИХ!) -->
   <script src="/sos-survive/js/data/water-en.js"></script>
   <script src="/sos-survive/js/data/fire-en.js"></script>
   <script src="/sos-survive/js/data/shelter-en.js"></script>
@@ -235,11 +255,13 @@
   <script src="/sos-survive/js/data/radio-en.js"></script>
   <script src="/sos-survive/js/data/kit-en.js"></script>
 
-  <!-- Потом движок и приложение -->
+  <!-- 5. ДВИЖОК (ПОСЛЕ ВСЕХ ДАННЫХ!) -->
   <script src="/sos-survive/js/engine.js"></script>
+
+  <!-- 6. ПРИЛОЖЕНИЕ (ПОСЛЕДНИМ!) -->
   <script src="/sos-survive/js/app.js"></script>
 
-  <!-- Загружаем сохранённый язык и тему -->
+  <!-- ЗАГРУЖАЕМ СОХРАНЁННЫЙ ЯЗЫК И ТЕМУ -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       loadSavedLanguage();

@@ -1,5 +1,5 @@
 // === SECTION: WATER (ENGLISH) ===
-const waterData = {
+const waterDataEn = {
   category: "water",
   title: "💧 Water",
   description: "Procurement, purification and preservation of drinking water",

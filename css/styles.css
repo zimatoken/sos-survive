@@ -58,7 +58,11 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-}
+  font-size: 16px; /* ════════════════════════════════════════ */
+}                /* БАЗОВЫЙ РАЗМЕР ШРИФТА ДЛЯ ВСЕГО ТЕЛА    */
+                 /* Увеличен с 14px → 16px для лучшей        */
+                 /* читаемости в экстремальных условиях      */
+                 /* ════════════════════════════════════════ */
 
 .app { 
   max-width: 480px; 
@@ -75,9 +79,9 @@ html, body {
 }
 
 .header h1 { 
-  font-size: 26px; 
-  margin: 0; 
-  font-weight: 800; 
+  font-size: 26px; /* ════════════════════════════════════════ */
+  margin: 0;       /* РАЗМЕР ЗАГОЛОВКА SOS SURVIVE             */
+  font-weight: 800;/* Было 26px → оставлено 26px              */
   letter-spacing: -0.5px;
   display: flex;
   align-items: center;
@@ -90,16 +94,16 @@ html, body {
   color: white;
   padding: 4px 10px;
   border-radius: 6px;
-  font-size: 13px;
-  font-weight: 900;
+  font-size: 13px; /* ════════════════════════════════════════ */
+  font-weight: 900;/* РАЗМЕР БЕЙДЖА SOS                       */
   letter-spacing: 1px;
 }
 
 .header p { 
   color: var(--text2); 
-  font-size: 14px; 
-  margin: 8px 0 0;
-  font-weight: 400;
+  font-size: 14px; /* ════════════════════════════════════════ */
+  margin: 8px 0 0; /* РАЗМЕР ПОДЗАГОЛОВКА                    */
+  font-weight: 400;/* "Офлайн-ассистент выживания"            */
 }
 
 /* ===== STATUS BAR ===== */
@@ -107,7 +111,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 13px; /* ════════════════════════════════════════ */
   color: var(--text2);
   margin-bottom: 16px;
   padding: 10px 14px;
@@ -115,6 +119,8 @@ html, body {
   border-radius: 12px;
   border: 1px solid var(--border);
 }
+                 /* РАЗМЕР ТЕКСТА В СТАТУС-БАРЕ             */
+                 /* "Режим офлайн — база загружена"         */
 
 .status-bar .dot { 
   width: 8px; 
@@ -138,9 +144,9 @@ html, body {
   color: white; 
   width: 100%; 
   padding: 20px;
-  font-size: 18px; 
-  font-weight: 700; 
-  cursor: pointer; 
+  font-size: 18px; /* ════════════════════════════════════════ */
+  font-weight: 700; /* РАЗМЕР ТЕКСТА КНОПКИ SOS               */
+  cursor: pointer;  /* "SOS — Я в опасности"                  */
   margin: 0 0 16px;
   box-shadow: 0 4px 24px rgba(220,38,38,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
   transition: all 0.2s ease;
@@ -236,15 +242,17 @@ html, body {
 .cat-btn:active { transform: translateY(-1px) scale(0.98); }
 
 .cat-btn .icon { 
-  font-size: 36px; 
-  line-height: 1;
+  font-size: 36px; /* ════════════════════════════════════════ */
+  line-height: 1;  /* РАЗМЕР ИКОНОК КАТЕГОРИЙ                 */
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
+                  /* 💧 Вода, 🔥 Огонь, 🏠 Укрытие и т.д.    */
 
 .cat-btn .label {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 15px; /* ════════════════════════════════════════ */
+  font-weight: 600;/* РАЗМЕР НАЗВАНИЙ КАТЕГОРИЙ               */
 }
+                  /* "Вода", "Огонь", "Укрытие" и т.д.       */
 
 .cat-btn.water::after { background: var(--water); }
 .cat-btn.fire::after { background: var(--fire); }
@@ -267,8 +275,10 @@ html, body {
   text-align: center;
   padding: 24px 0 8px;
   color: var(--text3);
-  font-size: 12px;
+  font-size: 12px; /* ════════════════════════════════════════ */
 }
+                 /* РАЗМЕР ТЕКСТА В ФУТЕРЕ                  */
+                 /* "v2.0 · Полностью офлайн"               */
 
 /* ===== SCREENS ===== */
 .screen { 
@@ -293,11 +303,13 @@ html, body {
   border-radius: 10px; 
   padding: 10px 18px; 
   cursor: pointer; 
-  font-size: 14px; 
+  font-size: 14px; /* ════════════════════════════════════════ */
   margin-bottom: 16px;
   transition: all 0.2s;
   font-weight: 500;
 }
+                 /* РАЗМЕР КНОПКИ "НАЗАД"                   */
+                 /* "← Назад", "← На главную"               */
 
 .back-btn:hover { 
   border-color: var(--border-hover); 
@@ -335,11 +347,13 @@ html, body {
 
 .question-card h3 { 
   margin: 0 0 20px; 
-  font-size: 20px; 
-  color: var(--text);
-  font-weight: 700;
-  line-height: 1.3;
+  font-size: 20px; /* ════════════════════════════════════════ */
+  color: var(--text);  /* РАЗМЕР ТЕКСТА ВОПРОСА                 */
+  font-weight: 700;    /* Было 20px, line-height увеличен       */
+  line-height: 1.4;    /* "Где вы находитесь?"                  */
 }
+                      /* УВЕЛИЧЕН для лучшей читаемости        */
+                      /* в экстремальных условиях              */
 
 .question-num {
   display: inline-block;
@@ -347,10 +361,11 @@ html, body {
   color: white;
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 12px; /* ════════════════════════════════════════ */
+  font-weight: 700;/* РАЗМЕР НОМЕРА ВОПРОСА                   */
   margin-bottom: 12px;
 }
+                 /* "Вопрос 1 из 4"                         */
 
 .option {
   background: rgba(255,255,255,0.02); 
@@ -363,10 +378,15 @@ html, body {
   align-items: center; 
   gap: 14px; 
   transition: all 0.2s ease; 
-  font-size: 15px;
+  font-size: 16px; /* ════════════════════════════════════════ */
   font-weight: 500;
   color: var(--text);
 }
+                 /* РАЗМЕР ТЕКСТА ВАРИАНТОВ ОТВЕТОВ        */
+                 /* Было 15px → УВЕЛИЧЕНО до 16px          */
+                 /* "🌲 Лес / тайга", "🏜️ Пустыня"         */
+                 /* УВЕЛИЧЕНО для лучшей читаемости         */
+                 /* в экстремальных условиях               */
 
 .option:hover { 
   background: rgba(255,255,255,0.04); 
@@ -382,10 +402,11 @@ html, body {
   display: flex; 
   align-items: center; 
   justify-content: center; 
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   transition: all 0.2s;
   color: transparent;
 }
+                 /* РАЗМЕР ГАЛОЧКИ В ЧЕКБОКСЕ               */
 
 .option.multi .check { 
   border-radius: 50%; 
@@ -412,9 +433,9 @@ html, body {
   color: white;
   width: 100%; 
   padding: 18px; 
-  font-size: 16px; 
-  font-weight: 700; 
-  cursor: pointer;
+  font-size: 16px; /* ════════════════════════════════════════ */
+  font-weight: 700; /* РАЗМЕР КНОПКИ "ДАЛЕЕ"                  */
+  cursor: pointer;  /* "Далее", "Показать решения"            */
   margin-top: 8px; 
   transition: all 0.2s ease;
   box-shadow: 0 4px 16px rgba(59,130,246,0.3);
@@ -453,21 +474,26 @@ html, body {
 }
 
 .results-icon {
-  font-size: 40px;
+  font-size: 40px; /* ════════════════════════════════════════ */
   margin-bottom: 8px;
 }
+                 /* РАЗМЕР ИКОНКИ В РЕЗУЛЬТАТАХ            */
+                 /* 💧, 🔥, 🏠 и т.д.                       */
 
 .results-header h2 {
   margin: 0;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 22px; /* ════════════════════════════════════════ */
+  font-weight: 700;/* РАЗМЕР ЗАГОЛОВКА РЕЗУЛЬТАТОВ           */
 }
+                 /* "Результаты", "Вода — Результаты"       */
 
 .results-header p {
   margin: 6px 0 0;
   color: var(--text2);
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
 }
+                 /* РАЗМЕР ПОДЗАГОЛОВКА РЕЗУЛЬТАТОВ         */
+                 /* "Под вашу ситуацию"                     */
 
 .result-card {
   background: var(--card); 
@@ -498,25 +524,31 @@ html, body {
 
 .result-card h4 { 
   margin: 0 0 10px; 
-  font-size: 17px; 
-  font-weight: 700;
+  font-size: 17px; /* ════════════════════════════════════════ */
+  font-weight: 700;/* РАЗМЕР ЗАГОЛОВКА КАРТОЧКИ РЕЗУЛЬТАТА  */
 }
+                 /* "🔍 Поиск родника / подземных вод"      */
 
 .result-card p { 
   margin: 0; 
   color: var(--text2); 
-  font-size: 14px; 
-  line-height: 1.6;
+  font-size: 15px; /* ════════════════════════════════════════ */
+  line-height: 1.6;  /* РАЗМЕР ОПИСАНИЯ В РЕЗУЛЬТАТАХ        */
 }
+                 /* Было 14px → УВЕЛИЧЕНО до 15px          */
+                 /* "Самый быстрый способ найти..."         */
+                 /* УВЕЛИЧЕНО для лучшей читаемости        */
 
 .result-card .meta { 
   display: flex; 
   gap: 10px; 
   margin-top: 14px; 
-  font-size: 12px; 
+  font-size: 12px; /* ════════════════════════════════════════ */
   color: var(--text3);
   flex-wrap: wrap;
 }
+                 /* РАЗМЕР МЕТА-ДАННЫХ В РЕЗУЛЬТАТАХ      */
+                 /* "15-60 мин", "неограниченно"            */
 
 .result-card .meta span { 
   background: rgba(255,255,255,0.04); 
@@ -529,11 +561,12 @@ html, body {
   display: inline-block; 
   padding: 4px 10px; 
   border-radius: 20px; 
-  font-size: 11px; 
-  font-weight: 700; 
+  font-size: 11px; /* ════════════════════════════════════════ */
+  font-weight: 700; /* РАЗМЕР БЕЙДЖЕЙ                          */
   margin-right: 6px;
   margin-bottom: 4px;
 }
+                 /* "⚡ Быстро", "✅ Надёжно" и т.д.        */
 
 .badge.fast { background: rgba(239,68,68,0.12); color: #ef4444; }
 .badge.medium { background: rgba(245,158,11,0.12); color: #f59e0b; }
@@ -553,16 +586,20 @@ html, body {
 
 .detail-card h2 {
   margin: 0 0 16px;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 22px; /* ════════════════════════════════════════ */
+  font-weight: 700;/* РАЗМЕР ЗАГОЛОВКА ДЕТАЛЬНОГО РЕШЕНИЯ    */
 }
+                 /* "🔍 Поиск родника / подземных вод"      */
 
 .detail-card .detail-desc {
   color: var(--text2);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px; /* ════════════════════════════════════════ */
+  line-height: 1.7;  /* РАЗМЕР ОПИСАНИЯ В ДЕТАЛЯХ             */
   margin-bottom: 20px;
 }
+                 /* Было 15px → УВЕЛИЧЕНО до 16px          */
+                 /* "Самый быстрый способ найти..."         */
+                 /* УВЕЛИЧЕНО для лучшей читаемости        */
 
 .steps-block, .warnings-block {
   margin-bottom: 20px;
@@ -570,11 +607,12 @@ html, body {
 
 .steps-block h4, .warnings-block h4 {
   margin: 0 0 12px;
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text2);
 }
+                 /* РАЗМЕР ЗАГОЛОВКОВ "ШАГИ" И "ПРЕДУПРЕЖДЕНИЯ" */
 
 .steps-block h4 { color: var(--water); }
 .warnings-block h4 { color: var(--accent); }
@@ -583,10 +621,13 @@ html, body {
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 15px; /* ════════════════════════════════════════ */
+  line-height: 1.6;  /* РАЗМЕР ТЕКСТА ШАГОВ И ПРЕДУПРЕЖДЕНИЙ  */
   color: var(--text);
 }
+                 /* Было 14px → УВЕЛИЧЕНО до 15px          */
+                 /* "🔎 Ищите влажную землю..."             */
+                 /* УВЕЛИЧЕНО для лучшей читаемости        */
 
 .step-num {
   width: 28px;
@@ -597,10 +638,12 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 12px; /* ════════════════════════════════════════ */
   font-weight: 700;
   flex-shrink: 0;
 }
+                 /* РАЗМЕР НОМЕРА ШАГА                     */
+                 /* "1", "2", "3" и т.д.                   */
 
 .warning-item .warn-icon {
   width: 28px;
@@ -611,9 +654,11 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   flex-shrink: 0;
 }
+                 /* РАЗМЕР ИКОНКИ ПРЕДУПРЕЖДЕНИЯ            */
+                 /* ⚠️, 🔥 и т.д.                           */
 
 /* ===== SOS SCREEN ===== */
 .sos-card {
@@ -631,21 +676,25 @@ html, body {
 }
 
 .sos-icon {
-  font-size: 32px;
+  font-size: 32px; /* ════════════════════════════════════════ */
 }
+                 /* РАЗМЕР ИКОНКИ SOS                       */
+                 /* 🚨                                       */
 
 .sos-header h2 {
   margin: 0;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 20px; /* ════════════════════════════════════════ */
+  font-weight: 700;/* РАЗМЕР ЗАГОЛОВКА "РЕЖИМ SOS"            */
 }
 
 .sos-desc {
   color: var(--text2);
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   line-height: 1.6;
   margin-bottom: 20px;
 }
+                 /* РАЗМЕР ОПИСАНИЯ В SOS                   */
+                 /* "Ваши координаты сохранены..."          */
 
 .gps-block {
   background: rgba(220,38,38,0.08);
@@ -656,23 +705,128 @@ html, body {
 }
 
 .gps-label {
-  font-size: 13px;
+  font-size: 13px; /* ════════════════════════════════════════ */
   color: #ef4444;
   font-weight: 600;
   margin-bottom: 8px;
 }
+                 /* РАЗМЕР ПОДПИСИ GPS                     */
+                 /* "📍 GPS-координаты (кэш)"               */
 
 .gps-coords {
   font-family: 'SF Mono', Monaco, monospace;
-  font-size: 15px;
+  font-size: 15px; /* ════════════════════════════════════════ */
   color: var(--text);
   font-weight: 600;
 }
+                 /* РАЗМЕР КООРДИНАТ                       */
+                 /* "55.7558, 37.6173"                      */
 
 .gps-time {
-  font-size: 12px;
+  font-size: 12px; /* ════════════════════════════════════════ */
   color: var(--text3);
   margin-top: 4px;
+}
+                 /* РАЗМЕР ВРЕМЕНИ ОБНОВЛЕНИЯ GPS          */
+                 /* "Обновлено: 14:30"                      */
+
+.contact-block {
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.contact-title {
+  font-size: 14px; /* ════════════════════════════════════════ */
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #3b82f6;
+}
+                 /* РАЗМЕР ЗАГОЛОВКА "ЭКСТРЕННЫЙ КОНТАКТ"  */
+
+.contact-field {
+  margin-bottom: 12px;
+}
+
+.contact-field:last-child {
+  margin-bottom: 0;
+}
+
+.contact-field label {
+  display: block;
+  font-size: 13px; /* ════════════════════════════════════════ */
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text2);
+}
+                 /* РАЗМЕР ПОДПИСЕЙ ПОЛЕЙ ВВОДА           */
+                 /* "Телефон близкого человека *"           */
+
+.contact-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 16px; /* ════════════════════════════════════════ */
+  color: var(--text);
+  font-family: inherit;
+  transition: all 0.2s;
+}
+                 /* РАЗМЕР ТЕКСТА В ПОЛЯХ ВВОДА           */
+                 /* Было 14px → УВЕЛИЧЕНО до 16px          */
+                 /* "+7 999 123 45 67"                      */
+                 /* УВЕЛИЧЕНО для лучшей читаемости        */
+                 /* и удобства ввода в стрессе             */
+
+.contact-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.contact-input::placeholder {
+  color: var(--text3);
+}
+
+.send-sos-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 18px; /* ════════════════════════════════════════ */
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(239,68,68,0.4);
+  margin-bottom: 20px;
+  animation: pulse-red 2s infinite;
+}
+                 /* РАЗМЕР КНОПКИ "ОТПРАВИТЬ SOS"          */
+                 /* Было 16px → УВЕЛИЧЕНО до 18px          */
+                 /* 🆘 ОТПРАВИТЬ SOS                        */
+                 /* УВЕЛИЧЕНО для видимости в стрессе      */
+
+@keyframes pulse-red {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(239,68,68,0.4);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(239,68,68,0.6);
+  }
+}
+
+.send-sos-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(239,68,68,0.5);
+}
+
+.send-sos-btn:active {
+  transform: scale(0.98);
 }
 
 .signals-block {
@@ -680,11 +834,12 @@ html, body {
 }
 
 .signals-title {
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   font-weight: 600;
   margin-bottom: 12px;
   color: var(--text);
 }
+                 /* РАЗМЕР ЗАГОЛОВКА "СИГНАЛЫ ДЛЯ СПАСАТЕЛЕЙ" */
 
 .signal-item {
   display: flex;
@@ -697,9 +852,11 @@ html, body {
   margin-bottom: 8px;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   color: var(--text);
 }
+                 /* РАЗМЕР ТЕКСТА СИГНАЛОВ                 */
+                 /* "3 огня в треугольнике..."              */
 
 .signal-item:hover {
   border-color: var(--border-hover);
@@ -720,11 +877,12 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 13px; /* ════════════════════════════════════════ */
   color: transparent;
   transition: all 0.2s;
   margin-top: 1px;
 }
+                 /* РАЗМЕР ГАЛОЧКИ В СИГНАЛЕ               */
 
 .signal-item.active .signal-check {
   background: var(--accent);
@@ -739,12 +897,14 @@ html, body {
   border: none;
   border-radius: 12px;
   color: white;
-  font-size: 15px;
+  font-size: 16px; /* ════════════════════════════════════════ */
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 0 4px 16px rgba(245,158,11,0.3);
 }
+                 /* РАЗМЕР КНОПКИ ФОНАРИКА                */
+                 /* "🔦 Фонарик (SOS-мигание)"              */
 
 .flashlight-btn:hover {
   transform: translateY(-1px);
@@ -755,6 +915,46 @@ html, body {
   background: linear-gradient(135deg, #10b981, #059669);
   box-shadow: 0 4px 16px rgba(16,185,129,0.3);
 }
+
+/* ===== PSYCHOLOGY BLOCK ===== */
+.psychology-block {
+  margin-top: 20px;
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.psychology-title {
+  font-size: 14px; /* ════════════════════════════════════════ */
+  font-weight: 600;
+  color: #a855f7;
+  margin-bottom: 12px;
+}
+                 /* РАЗМЕР ЗАГОЛОВКА "ПСИХОЛОГИЯ ВЫЖИВАНИЯ" */
+
+.psychology-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 14px; /* ════════════════════════════════════════ */
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+                 /* РАЗМЕР СОВЕТОВ ПО ПСИХОЛОГИИ          */
+                 /* "Дыши: 4 сек вдох..."                   */
+
+.psychology-item:last-child {
+  border-bottom: none;
+}
+
+.psychology-icon {
+  font-size: 18px; /* ════════════════════════════════════════ */
+  flex-shrink: 0;
+}
+                 /* РАЗМЕР ИКОНОК ПСИХОЛОГИИ              */
+                 /* 🫁, 📝, 🗣️, 🎯                         */
 
 /* ===== TOAST ===== */
 .toast {
@@ -767,7 +967,7 @@ html, body {
   color: var(--text);
   padding: 14px 28px; 
   border-radius: 12px; 
-  font-size: 14px;
+  font-size: 14px; /* ════════════════════════════════════════ */
   display: none; 
   z-index: 100;
   box-shadow: var(--shadow);
@@ -775,6 +975,8 @@ html, body {
   max-width: 90%;
   text-align: center;
 }
+                 /* РАЗМЕР УВЕДОМЛЕНИЙ (TOAST)             */
+                 /* "Раздел в разработке"                   */
 
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
@@ -784,34 +986,47 @@ html, body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
   .app { padding: 12px; }
-  .header h1 { font-size: 22px; }
-  .cat-btn { padding: 22px 8px; }
-  .cat-btn .icon { font-size: 30px; }
+  .header h1 { font-size: 22px; } /* ════════════════════════════════════════ */
+  .cat-btn { padding: 22px 8px; }  /* РАЗМЕР ЗАГОЛОВКА SOS SURVIVE           */
+  .cat-btn .icon { font-size: 30px; } /* на малых экранах <480px              */
   .cat-btn .label { font-size: 13px; }
   .sos-btn { font-size: 16px; padding: 16px; }
-  .question-card h3 { font-size: 17px; }
-  .option { font-size: 14px; padding: 14px; }
-  .result-card h4 { font-size: 15px; }
-  .result-card .meta span { 
-    font-size: 11px; 
-    padding: 3px 8px; 
-  }
-  .step-item, .warning-item { 
-    font-size: 13px; 
-  }
-  .detail-card h2 { 
-    font-size: 19px; 
-  }
+
+  /* ════════════════════════════════════════ */
+  /* УВЕЛИЧЕННЫЕ ШРИФТЫ ДЛЯ МАЛЫХ ЭКРАНОВ   */
+  /* ════════════════════════════════════════ */
+  .question-card h3 { font-size: 18px; } /* Было 17px → 18px */
+  .option { font-size: 15px; padding: 14px; } /* Было 14px → 15px */
+  .result-card h4 { font-size: 16px; } /* Было 15px → 16px */
+  .result-card p { font-size: 14px; } /* Было 13px → 14px */
+  .step-item, .warning-item { font-size: 14px; } /* Было 13px → 14px */
+  .detail-card .detail-desc { font-size: 15px; } /* Было 14px → 15px */
+  .detail-card h2 { font-size: 19px; }
+  .contact-input { font-size: 15px; } /* Было 14px → 15px */
+  .send-sos-btn { font-size: 16px; } /* Было 15px → 16px */
 }
 
 @media (max-width: 360px) {
   .app { padding: 8px; }
-  .header h1 { font-size: 18px; }
-  .cat-btn { padding: 16px 6px; }
-  .cat-btn .icon { font-size: 24px; }
+  .header h1 { font-size: 18px; } /* ════════════════════════════════════════ */
+  .cat-btn { padding: 16px 6px; }   /* РАЗМЕР ЗАГОЛОВКА SOS SURVIVE           */
+  .cat-btn .icon { font-size: 24px; } /* на очень малых экранах <360px        */
   .cat-btn .label { font-size: 11px; }
   .sos-btn { font-size: 14px; padding: 12px; }
   .grid { gap: 8px; }
+
+  /* ════════════════════════════════════════ */
+  /* УВЕЛИЧЕННЫЕ ШРИФТЫ ДЛЯ ОЧЕНЬ МАЛЫХ     */
+  /* ════════════════════════════════════════ */
+  .question-card h3 { font-size: 16px; } /* Было 15px → 16px */
+  .option { font-size: 14px; padding: 12px; } /* Было 13px → 14px */
+  .result-card h4 { font-size: 14px; } /* Было 13px → 14px */
+  .result-card p { font-size: 13px; } /* Было 12px → 13px */
+  .step-item, .warning-item { font-size: 13px; } /* Было 12px → 13px */
+  .detail-card .detail-desc { font-size: 14px; } /* Было 13px → 14px */
+  .detail-card h2 { font-size: 17px; }
+  .contact-input { font-size: 14px; } /* Было 13px → 14px */
+  .send-sos-btn { font-size: 15px; } /* Было 14px → 15px */
 }
 
 /* ===== LANGUAGE SWITCHER ===== */
@@ -831,11 +1046,13 @@ html, body {
   padding: 8px 16px;
   color: var(--text2);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 13px; /* ════════════════════════════════════════ */
   font-weight: 600;
   transition: all 0.25s ease;
   font-family: inherit;
 }
+                 /* РАЗМЕР КНОПОК ЯЗЫКА                    */
+                 /* "🇷🇺 Русский", "🇬🇧 English"             */
 
 .lang-btn:hover {
   border-color: var(--border-hover);
@@ -862,16 +1079,16 @@ html, body {
 @media (max-width: 480px) {
   .lang-btn {
     padding: 6px 12px;
-    font-size: 12px;
+    font-size: 12px; /* ════════════════════════════════════════ */
   }
-}
+}                /* РАЗМЕР КНОПОК ЯЗЫКА <480px             */
 
 @media (max-width: 360px) {
   .lang-btn {
     padding: 4px 8px;
-    font-size: 10px;
+    font-size: 10px; /* ════════════════════════════════════════ */
   }
-}
+}                /* РАЗМЕР КНОПОК ЯЗЫКА <360px             */
 
 /* ===== THEME BUTTON ===== */
 .theme-btn {
@@ -879,7 +1096,7 @@ html, body {
   border: 1.5px solid var(--border);
   border-radius: 10px;
   padding: 8px 14px;
-  font-size: 18px;
+  font-size: 18px; /* ════════════════════════════════════════ */
   cursor: pointer;
   transition: all 0.25s ease;
   min-height: 44px;
@@ -888,6 +1105,7 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+                 /* РАЗМЕР ИКОНКИ ТЕМЫ 🌙/☀️               */
 
 .theme-btn:hover {
   transform: scale(1.05);
@@ -901,16 +1119,16 @@ html, body {
 @media (max-width: 480px) {
   .theme-btn {
     padding: 6px 12px;
-    font-size: 16px;
+    font-size: 16px; /* ════════════════════════════════════════ */
   }
-}
+}                /* РАЗМЕР ИКОНКИ ТЕМЫ <480px              */
 
 @media (max-width: 360px) {
   .theme-btn {
     padding: 4px 8px;
-    font-size: 14px;
+    font-size: 14px; /* ════════════════════════════════════════ */
   }
-}
+}                /* РАЗМЕР ИКОНКИ ТЕМЫ <360px              */
 
 /* ===== MIC BUTTON ===== */
 .mic-btn {
@@ -918,7 +1136,7 @@ html, body {
   border: 1.5px solid var(--border);
   border-radius: 10px;
   padding: 8px 14px;
-  font-size: 18px;
+  font-size: 18px; /* ════════════════════════════════════════ */
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: inherit;
@@ -928,6 +1146,7 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+                 /* РАЗМЕР ИКОНКИ МИКРОФОНА 🎤             */
 
 .mic-btn:hover {
   border-color: var(--accent);
@@ -954,9 +1173,9 @@ html, body {
 @media (max-width: 480px) {
   .mic-btn {
     padding: 6px 10px;
-    font-size: 16px;
+    font-size: 16px; /* ════════════════════════════════════════ */
   }
-}
+}                /* РАЗМЕР ИКОНКИ МИКРОФОНА <480px        */
 
 /* ===== MAP LINK ===== */
 .map-link-block {
@@ -973,11 +1192,13 @@ html, body {
   color: var(--water);
   text-decoration: none;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 15px; /* ════════════════════════════════════════ */
   padding: 8px 16px;
   border-radius: 8px;
   transition: all 0.2s;
 }
+                 /* РАЗМЕР ССЫЛКИ НА КАРТУ                */
+                 /* "🗺️ Открыть карту..."                   */
 
 .map-link:hover {
   background: rgba(59,130,246,0.08);
@@ -986,47 +1207,14 @@ html, body {
 
 .map-hint {
   display: block;
-  font-size: 12px;
+  font-size: 12px; /* ════════════════════════════════════════ */
   color: var(--text3);
   margin-top: 4px;
 }
+                 /* РАЗМЕР ПОДСКАЗКИ ПОД КАРТОЙ          */
+                 /* "Или скачай Organic Maps..."            */
 
 /* ===== RADIO BUTTON ===== */
 .cat-btn.radio { border-color: rgba(234, 179, 8, 0.3); }
 .cat-btn.radio:hover { border-color: #eab308; background: rgba(234, 179, 8, 0.06); }
 .cat-btn.radio::after { background: #eab308; }
-
-/* ===== PSYCHOLOGY BLOCK ===== */
-.psychology-block {
-  margin-top: 20px;
-  background: rgba(168, 85, 247, 0.08);
-  border: 1px solid rgba(168, 85, 247, 0.15);
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.psychology-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #a855f7;
-  margin-bottom: 12px;
-}
-
-.psychology-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  font-size: 14px;
-  color: var(--text);
-  border-bottom: 1px solid var(--border);
-}
-
-.psychology-item:last-child {
-  border-bottom: none;
-}
-
-.psychology-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-}

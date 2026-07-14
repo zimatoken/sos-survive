@@ -69,6 +69,10 @@ const LOCALES = {
     sos_flashlight: "🔦 Фонарик (SOS-мигание)",
     sos_flashlight_on: "🔦 Фонарик ВКЛ (SOS-мигание)",
     sos_coords_saved: "Координаты сохранены в кэш",
+    sos_contact_title: "📱 Экстренный контакт",
+    sos_phone_label: "Телефон близкого человека *",
+    sos_name_label: "Имя близкого человека (опционально)",
+    sos_send_btn: "🆘 ОТПРАВИТЬ SOS",
     
     // Toast
     toast_develop: "Раздел в разработке",
@@ -155,6 +159,10 @@ const LOCALES = {
     sos_flashlight: "🔦 Flashlight (SOS blinking)",
     sos_flashlight_on: "🔦 Flashlight ON (SOS blinking)",
     sos_coords_saved: "Coordinates saved to cache",
+    sos_contact_title: "📱 Emergency contact",
+    sos_phone_label: "Contact phone number *",
+    sos_name_label: "Contact name (optional)",
+    sos_send_btn: "🆘 SEND SOS",
     
     // Toast
     toast_develop: "Section in development",

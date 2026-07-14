@@ -1,5 +1,5 @@
 // === SECTION: FIRE (ENGLISH) ===
-const fireData = {
+const fireDataEn = {
   category: "fire",
   title: "🔥 Fire",
   description: "Making fire in any conditions",

@@ -1,5 +1,5 @@
 // === SECTION: FOOD (ENGLISH) ===
-const foodData = {
+const foodDataEn = {
   category: "food",
   title: "🍖 Food",
   description: "Obtaining food in the wild",

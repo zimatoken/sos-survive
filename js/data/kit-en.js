@@ -1,5 +1,5 @@
 // === SECTION: SURVIVAL KIT (PREPARATION) ===
-const kitData = {
+const kitDataEn = {
   category: "kit",
   title: "🎒 Survival Kit",
   description: "What to take on a hike, trip or emergency situation",

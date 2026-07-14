@@ -1,5 +1,5 @@
 // === SECTION: MEDICINE (ENGLISH) ===
-const medicineData = {
+const medicineDataEn = {
   category: "medicine",
   title: "🩹 Medicine",
   description: "First aid and treatment in the field",
