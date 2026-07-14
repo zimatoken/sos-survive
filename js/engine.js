@@ -24,7 +24,6 @@ console.log("  kitDataEn:", typeof kitDataEn !== 'undefined' ? '✅' : '❌');
 
 // Регистр всех данных (русские и английские версии)
 const dataRegistry = {
-  // Русские версии (используются по умолчанию)
   ru: {
     water: waterData,
     fire: fireData,
@@ -35,11 +34,10 @@ const dataRegistry = {
     radio: radioData,
     kit: kitData
   },
-  // Английские версии (используются при выборе языка en)
   en: {}
 };
 
-// Заполняем английский регистр, если данные загружены
+// Заполняем английский регистр
 if (typeof waterDataEn !== 'undefined') dataRegistry.en.water = waterDataEn;
 if (typeof fireDataEn !== 'undefined') dataRegistry.en.fire = fireDataEn;
 if (typeof shelterDataEn !== 'undefined') dataRegistry.en.shelter = shelterDataEn;
@@ -49,15 +47,10 @@ if (typeof navigationDataEn !== 'undefined') dataRegistry.en.navigation = naviga
 if (typeof radioDataEn !== 'undefined') dataRegistry.en.radio = radioDataEn;
 if (typeof kitDataEn !== 'undefined') dataRegistry.en.kit = kitDataEn;
 
-// Определяем текущий язык (из глобальной переменной или localStorage)
 function getCurrentLang() {
-  // Используем глобальную переменную из locales.js
   return typeof currentLang !== 'undefined' ? currentLang : 'ru';
 }
 
-/**
- * Получение данных по категории с учётом языка
- */
 function getCategoryData(category) {
   const lang = getCurrentLang();
   const langData = dataRegistry[lang] || dataRegistry.ru;
@@ -65,7 +58,6 @@ function getCategoryData(category) {
   
   if (!data) {
     console.error(`❌ Категория не найдена: ${category} (язык: ${lang})`);
-    // Пробуем найти в русской версии как fallback
     if (lang !== 'ru' && dataRegistry.ru[category]) {
       console.log(`🔄 Используем русскую версию как fallback для ${category}`);
       return dataRegistry.ru[category];
@@ -80,6 +72,7 @@ function getCategoryData(category) {
 
 /**
  * Фильтрация решений по ответам пользователя
+ * Улучшена: учитывает основной симптом при Fallback
  */
 function filterSolutions(data, answers) {
   if (!data || !data.solutions) {
@@ -87,86 +80,108 @@ function filterSolutions(data, answers) {
     return [];
   }
 
-  // Если нет ответов — возвращаем первые 5 решений
   if (!answers || Object.keys(answers).length === 0) {
     console.warn("⚠️ Нет ответов, возвращаем первые 5 решений");
     return data.solutions.slice(0, 5);
   }
 
+  // --- ОСНОВНАЯ ФИЛЬТРАЦИЯ ---
   let matched = data.solutions.filter(sol => {
-    // Проверяем все условия решения
     for (let [key, allowedValues] of Object.entries(sol.conditions)) {
       const userAnswer = answers[key];
-      
-      // Если пользователь не ответил на этот вопрос — пропускаем условие
       if (!userAnswer || userAnswer.length === 0) continue;
-      
-      // Проверяем, что хотя бы один ответ пользователя совпадает с разрешёнными
       const hasMatch = userAnswer.some(val => allowedValues.includes(val));
       if (!hasMatch) return false;
     }
     return true;
   });
 
-  // Fallback если нет точных совпадений
+  // --- FALLBACK: если нет точных совпадений ---
   if (matched.length === 0) {
-    console.log("🔄 Нет точных совпадений, ищем универсальные решения");
+    console.log("🔄 Нет точных совпадений, ищем ближайшие по симптомам");
     
-    // Собираем все теги из ответов пользователя
+    // 1. Определяем основной симптом (для медицины)
+    const mainSymptom = answers.symptom ? answers.symptom[0] : null;
+    
+    // 2. Собираем все теги из ответов
     const allTags = Object.values(answers).flat();
     
-    // Ищем решения, которые содержат любой из тегов пользователя
     matched = data.solutions.filter(sol => {
       if (!sol.tags) return false;
       
-      // Проверяем, есть ли пересечение тегов
+      // 2.1 Проверяем симптом (для медицины)
+      if (mainSymptom) {
+        // Если у решения есть symptom в условиях — проверяем соответствие
+        if (sol.conditions && sol.conditions.symptom) {
+          const solSymptoms = sol.conditions.symptom;
+          if (!solSymptoms.includes(mainSymptom)) {
+            // Если симптом не совпадает — пропускаем
+            return false;
+          }
+        } else {
+          // Если у решения нет symptom в условиях, но оно помечено как универсальное
+          // и подходит по тегам — пропускаем только если это действительно универсальное
+          // (для медицины — только emergency и universal)
+          const isMedicalUniversal = sol.tags.includes("emergency") || 
+                                     sol.tags.includes("first_aid");
+          if (!isMedicalUniversal) {
+            return false;
+          }
+        }
+      }
+      
+      // 2.2 Проверяем пересечение тегов
       const hasTagMatch = allTags.some(tag => sol.tags.includes(tag));
       
-      // Или решение помечено как универсальное/базовое
+      // 2.3 Проверяем, помечено ли как универсальное
       const isUniversal = sol.tags.includes("universal") || 
                          sol.tags.includes("primitive") ||
                          sol.tags.includes("search") ||
                          sol.tags.includes("basic") ||
                          sol.tags.includes("emergency") ||
+                         sol.tags.includes("first_aid") ||
                          sol.tags.includes("checklist");
       
       return hasTagMatch || isUniversal;
     });
+    
+    // 3. Если всё ещё ничего не найдено — возвращаем первые 3 решения как экстренные
+    if (matched.length === 0) {
+      console.warn("⚠️ Не найдено подходящих решений, показываем экстренные");
+      matched = data.solutions.filter(sol => 
+        sol.tags && (sol.tags.includes("emergency") || sol.tags.includes("first_aid"))
+      );
+      if (matched.length === 0) {
+        matched = data.solutions.slice(0, 3);
+      }
+    }
   }
 
-  // Сортировка по приоритету и надёжности
+  // --- СОРТИРОВКА ---
   const prioOrder = { fast: 3, medium: 2, slow: 1 };
   const relOrder = { high: 3, medium: 2, low: 1 };
 
   matched.sort((a, b) => {
-    // Сначала по приоритету
     const prioA = prioOrder[a.priority] || 1;
     const prioB = prioOrder[b.priority] || 1;
     if (prioB !== prioA) {
       return prioB - prioA;
     }
-    // Затем по надёжности
     const relA = relOrder[a.reliability] || 1;
     const relB = relOrder[b.reliability] || 1;
     return relB - relA;
   });
 
-  // Возвращаем топ-5 решений
   const result = matched.slice(0, 5);
   console.log(`✅ Найдено решений: ${matched.length}, показано: ${result.length}`);
-  
   return result;
 }
 
-/**
- * Получение решения по ID
- */
 function getSolutionById(data, id) {
   if (!data || !data.solutions) {
     console.warn("⚠️ Нет данных для поиска решения");
     return null;
   }
-  
   const solution = data.solutions.find(s => s.id === id);
   if (!solution) {
     console.warn(`⚠️ Решение не найдено: ${id}`);
@@ -174,19 +189,15 @@ function getSolutionById(data, id) {
   return solution || null;
 }
 
-// Обновляем данные при смене языка
 function refreshDataRegistry() {
-  // Просто перезагружаем — данные уже в регистре
   const lang = getCurrentLang();
   console.log(`🔄 Обновление данных для языка: ${lang}`);
-  
-  // Проверяем доступность данных для текущего языка
   const langData = dataRegistry[lang] || dataRegistry.ru;
   const categories = Object.keys(langData);
   console.log(`📋 Доступно категорий (${lang}): ${categories.join(", ")}`);
 }
 
-// Экспорт для глобального использования
+// Экспорт
 window.getCategoryData = getCategoryData;
 window.filterSolutions = filterSolutions;
 window.getSolutionById = getSolutionById;
