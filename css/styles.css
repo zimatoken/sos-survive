@@ -1004,6 +1004,9 @@ html, body {
   .detail-card h2 { font-size: 19px; }
   .contact-input { font-size: 15px; } /* Было 14px → 15px */
   .send-sos-btn { font-size: 16px; } /* Было 15px → 16px */
+  .support-title { font-size: 14px; }
+  .support-desc { font-size: 13px; }
+  .support-btn { font-size: 14px; padding: 10px 16px; }
 }
 
 @media (max-width: 360px) {
@@ -1027,6 +1030,8 @@ html, body {
   .detail-card h2 { font-size: 17px; }
   .contact-input { font-size: 14px; } /* Было 13px → 14px */
   .send-sos-btn { font-size: 15px; } /* Было 14px → 15px */
+  .support-title { font-size: 13px; }
+  .support-btn { font-size: 13px; padding: 8px 12px; }
 }
 
 /* ===== LANGUAGE SWITCHER ===== */
@@ -1214,7 +1219,215 @@ html, body {
                  /* РАЗМЕР ПОДСКАЗКИ ПОД КАРТОЙ          */
                  /* "Или скачай Organic Maps..."            */
 
+/* ===== SUPPORT BLOCK ===== */
+.support-block {
+  margin-top: 16px;
+  padding: 20px 16px;
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.support-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.support-heart {
+  font-size: 22px;
+  animation: heartBeat 2s infinite ease-in-out;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.2); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+  60% { transform: scale(1); }
+}
+
+.support-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.support-desc {
+  font-size: 14px;
+  color: var(--text2);
+  margin: 8px 0 16px;
+  line-height: 1.5;
+}
+
+.support-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.support-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.support-btn.telegram {
+  background: linear-gradient(135deg, #0088cc, #005f8a);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+}
+
+.support-btn.telegram:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+}
+
+.support-btn.donate {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.support-btn.donate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.support-footer {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text3);
+}
+
+.support-trust {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
 /* ===== RADIO BUTTON ===== */
 .cat-btn.radio { border-color: rgba(234, 179, 8, 0.3); }
 .cat-btn.radio:hover { border-color: #eab308; background: rgba(234, 179, 8, 0.06); }
 .cat-btn.radio::after { background: #eab308; }
+
+/* ===== SUPPORT BANNER ===== */
+.support-banner {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  max-width: 448px;
+  width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  animation: supportBannerFadeIn 0.5s ease-out;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.support-banner:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.support-banner .support-banner-heart {
+  font-size: 16px;
+  color: #ef4444;
+  transition: transform 0.3s ease;
+}
+
+.support-banner:hover .support-banner-heart {
+  animation: supportBannerHeartPulse 0.6s ease-in-out;
+}
+
+@keyframes supportBannerHeartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.support-banner .support-banner-text {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.support-banner:hover .support-banner-text {
+  color: #f1f5f9;
+}
+
+.support-banner .support-banner-close {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.support-banner .support-banner-close:hover {
+  color: var(--text);
+}
+
+@keyframes supportBannerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .support-banner {
+    bottom: 12px;
+    padding: 6px 12px;
+    width: calc(100% - 24px);
+  }
+
+  .support-banner .support-banner-heart {
+    font-size: 14px;
+  }
+
+  .support-banner .support-banner-text {
+    font-size: 13px;
+  }
+}

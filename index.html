@@ -138,13 +138,19 @@
             💳 Поддержать проект
           </a>
         </div>
-        <div class="qr-block">
-          <img src="/sos-survive/assets/qr-code.png" alt="QR-код для поддержки" class="qr-code" id="supportQr" loading="lazy">
-          <span class="qr-hint" data-i18n="support_qr_hint">📸 Отсканируй QR-код для поддержки</span>
+        <div class="support-trust" data-i18n="support_trust">
+          💎 Все средства идут на развитие проекта и помощь людям в экстренных ситуациях. Спасибо за доверие!
         </div>
         <div class="support-footer">
           <span data-i18n="support_footer">Спасибо, что вы с нами! 🙌</span>
         </div>
+      </div>
+
+      <!-- SUPPORT BANNER -->
+      <div class="support-banner" id="supportBanner" onclick="handleSupportBannerClick(event)">
+        <span class="support-banner-heart">❤️</span>
+        <span class="support-banner-text">Поддержать проект — 100 ₽</span>
+        <button class="support-banner-close" onclick="closeSupportBanner(event)" aria-label="Закрыть">✕</button>
       </div>
     </div>
 
