@@ -16,29 +16,6 @@
   <link rel="stylesheet" href="/sos-survive/css/styles.css">
 </head>
 <body>
-  <!-- ПРИНУДИТЕЛЬНАЯ ОЧИСТКА СТАРОГО SERVICE WORKER -->
-  <script>
-    (function() {
-      if ('serviceWorker' in navigator) {
-        // Удаляем ВСЕ старые Service Workers
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for (let registration of registrations) {
-            console.log('[PWA Fix] Удаляем старый SW:', registration.scope);
-            registration.unregister();
-          }
-        });
-        // Очищаем ВСЕ кэши
-        if ('caches' in window) {
-          caches.keys().then(function(cacheNames) {
-            cacheNames.forEach(function(cacheName) {
-              console.log('[PWA Fix] Удаляем кэш:', cacheName);
-              caches.delete(cacheName);
-            });
-          });
-        }
-      }
-    })();
-  </script>
 
   <div class="app">
     <!-- ЭКРАН 1: Главная -->
