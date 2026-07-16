@@ -16,29 +16,6 @@
   <link rel="stylesheet" href="/sos-survive/css/styles.css">
 </head>
 <body>
-  <!-- ПРИНУДИТЕЛЬНАЯ ОЧИСТКА СТАРОГО SERVICE WORKER -->
-  <script>
-    (function() {
-      if ('serviceWorker' in navigator) {
-        // Удаляем ВСЕ старые Service Workers
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for (let registration of registrations) {
-            console.log('[PWA Fix] Удаляем старый SW:', registration.scope);
-            registration.unregister();
-          }
-        });
-        // Очищаем ВСЕ кэши
-        if ('caches' in window) {
-          caches.keys().then(function(cacheNames) {
-            cacheNames.forEach(function(cacheName) {
-              console.log('[PWA Fix] Удаляем кэш:', cacheName);
-              caches.delete(cacheName);
-            });
-          });
-        }
-      }
-    })();
-  </script>
 
   <div class="app">
     <!-- ЭКРАН 1: Главная -->
@@ -134,17 +111,23 @@
           <a href="https://t.me/sos_survive_bot" target="_blank" class="support-btn telegram" data-i18n="support_telegram">
             📱 Написать в Telegram
           </a>
-          <a href="https://www.tinkoff.ru/rm/zima.token1/5z4YV31214" target="_blank" class="support-btn donate" data-i18n="support_donate">
+          <a href="https://www.tbank.ru/cf/6JMHHj3oQAn" target="_blank" class="support-btn donate" data-i18n="support_donate">
             💳 Поддержать проект
           </a>
         </div>
-        <div class="qr-block">
-          <img src="/sos-survive/assets/qr-code.png" alt="QR-код для поддержки" class="qr-code" id="supportQr" loading="lazy">
-          <span class="qr-hint" data-i18n="support_qr_hint">📸 Отсканируй QR-код для поддержки</span>
+        <div class="support-trust" data-i18n="support_trust">
+          💎 Все средства идут на развитие проекта и помощь людям в экстренных ситуациях. Спасибо за доверие!
         </div>
         <div class="support-footer">
           <span data-i18n="support_footer">Спасибо, что вы с нами! 🙌</span>
         </div>
+      </div>
+
+      <!-- SUPPORT BANNER -->
+      <div class="support-banner" id="supportBanner" onclick="handleSupportBannerClick(event)">
+        <span class="support-banner-heart">❤️</span>
+        <span class="support-banner-text">Поддержать проект — 100 ₽</span>
+        <button class="support-banner-close" onclick="closeSupportBanner(event)" aria-label="Закрыть">✕</button>
       </div>
     </div>
 
