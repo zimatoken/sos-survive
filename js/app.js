@@ -313,3 +313,46 @@ function showDetail(solId) {
 function showResultsBack() {
   showScreen("screen-results");
 }
+
+// === SUPPORT BANNER FUNCTIONS ===
+
+function handleSupportBannerClick(event) {
+  // Prevent triggering when clicking the close button
+  if (event.target.classList.contains('support-banner-close')) {
+    return;
+  }
+  
+  // Open donation link (placeholder for now)
+  window.open('https://www.tinkoff.ru/rm/zima.token1/5z4YV31214', '_blank');
+}
+
+function closeSupportBanner(event) {
+  event.stopPropagation(); // Prevent banner click handler from firing
+  
+  const banner = document.getElementById('supportBanner');
+  if (banner) {
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateX(-50%) translateY(20px)';
+    banner.style.transition = 'all 0.3s ease';
+    
+    setTimeout(() => {
+      banner.style.display = 'none';
+    }, 300);
+  }
+  
+  // Save dismissal to localStorage (optional - banner won't show again for 24 hours)
+  const dismissedUntil = Date.now() + (24 * 60 * 60 * 1000); // 24 hours
+  localStorage.setItem('supportBannerDismissed', dismissedUntil.toString());
+}
+
+// Check if banner should be shown on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const dismissedUntil = localStorage.getItem('supportBannerDismissed');
+  const banner = document.getElementById('supportBanner');
+  
+  if (banner && dismissedUntil) {
+    if (Date.now() < parseInt(dismissedUntil)) {
+      banner.style.display = 'none';
+    }
+  }
+});
