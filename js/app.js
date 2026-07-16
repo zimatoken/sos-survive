@@ -323,7 +323,7 @@ function handleSupportBannerClick(event) {
   }
   
   // Open donation link (placeholder for now)
-  window.open('https://www.tbank.ru/cf/6JMHHj3oQAn', '_blank');
+window.open('https://www.tbank.ru/cf/6JMHHj3oQAn', '_blank');
 }
 
 function closeSupportBanner(event) {

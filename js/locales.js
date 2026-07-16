@@ -94,7 +94,8 @@ const LOCALES = {
     support_desc: "Если приложение помогло — скажите спасибо, это вдохновляет нас делать его лучше!",
     support_telegram: "📱 Написать в Telegram",
     support_donate: "💳 Поддержать проект",
-    support_card: "💳 Карта: 2200 7021 6620 7279",
+support_card: "💳 Карта: 2200 7021 6620 7279",
+
     support_trust: "💎 Все средства идут на развитие проекта и помощь людям в экстренных ситуациях. Спасибо за доверие!",
     support_footer: "Спасибо, что вы с нами! 🙌",
     
@@ -193,7 +194,8 @@ const LOCALES = {
     support_desc: "If the app helped you — say thank you, it inspires us to make it better!",
     support_telegram: "📱 Write to Telegram",
     support_donate: "💳 Support the project",
-    support_card: "💳 Card: 2200 7021 6620 7279",
+support_card: "💳 Card: 2200 7021 6620 7279",
+
     support_trust: "💎 All funds go to project development and helping people in emergency situations. Thank you for your trust!",
     support_footer: "Thank you for being with us! 🙌",
     
